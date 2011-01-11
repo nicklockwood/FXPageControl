@@ -1,7 +1,7 @@
 Purpose
 --------------
 
-PageControl is a replacement for Apple's UIPageControl that replicated all the
+PageControl is a replacement for Apple's UIPageControl that replicates all the
 functionality of the standard control, but adds the ability to edit the dot
 colour, size and spacing.
 

@@ -1,14 +1,14 @@
 //
-//  PageControl.m
+//  CustomPageControl.m
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design. All rights reserved.
 //
 
-#import "PageControl.h"
+#import "CustomPageControl.h"
 
 
-@implementation PageControl
+@implementation CustomPageControl
 
 @synthesize currentPage;
 @synthesize numberOfPages;
@@ -20,7 +20,8 @@
 
 - (void)setup
 {	
-	self.selectedDotColour = [UIColor whiteColor];
+	//set defaults
+    self.selectedDotColour = [UIColor whiteColor];
 	self.dotColour = [UIColor colorWithWhite:1.0 alpha:0.25];
 	dotSpacing = 10.0;
 	dotSize = 6.0;
@@ -62,7 +63,7 @@
 	}
 }
 
-- (void)setCurrentPage:(NSUInteger)page
+- (void)setCurrentPage:(NSInteger)page
 {
 	if (page >= 0 && page < numberOfPages)
 	{
@@ -71,7 +72,7 @@
 	}
 }
 
-- (void)setNumberOfPages:(NSUInteger)pages
+- (void)setNumberOfPages:(NSInteger)pages
 {
 	numberOfPages = pages;
 	[self setNeedsDisplay];

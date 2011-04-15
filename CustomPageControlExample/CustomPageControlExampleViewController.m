@@ -8,6 +8,14 @@
 
 #import "CustomPageControlExampleViewController.h"
 
+
+@interface CustomPageControlExampleViewController()
+
+@property (nonatomic, assign) NSInteger prevPageIndex;
+
+@end
+
+
 @implementation CustomPageControlExampleViewController
 
 @synthesize scrollView1;
@@ -16,6 +24,7 @@
 @synthesize pageControl2;
 @synthesize contentView1;
 @synthesize contentView2;
+@synthesize prevPageIndex;
 
 
 - (void)dealloc
@@ -83,16 +92,22 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //update page control when scrollview scrolls
-    if (scrollView == scrollView1)
+    //prevent flicker by only updating when page index has changed
+    NSInteger pageIndex = round(scrollView.contentOffset.x / scrollView.bounds.size.width);
+    if (pageIndex != prevPageIndex)
     {
-        pageControl1.currentPage = round(scrollView.contentOffset.x / scrollView.bounds.size.width);
-        pageControl1.selectedDotColour = (pageControl1.currentPage == 2)? [UIColor whiteColor]: [UIColor blackColor];
-        pageControl1.dotColour = (pageControl1.currentPage == 2)?
-            [UIColor colorWithWhite:1.0 alpha:0.25]: [UIColor colorWithWhite:0.0 alpha:0.25];
-    }
-    else
-    {
-        pageControl2.currentPage = round(scrollView.contentOffset.x / scrollView.bounds.size.width);
+        if (scrollView == scrollView1)
+        {
+            pageControl1.currentPage = pageIndex;
+            pageControl1.selectedDotColour = (pageIndex == 2)? [UIColor whiteColor]: [UIColor blackColor];
+            pageControl1.dotColour = (pageIndex == 2)?
+                [UIColor colorWithWhite:1.0 alpha:0.25]: [UIColor colorWithWhite:0.0 alpha:0.25];
+        }
+        else
+        {
+            pageControl2.currentPage = pageIndex;
+        }
+        prevPageIndex = pageIndex;
     }
 }
 

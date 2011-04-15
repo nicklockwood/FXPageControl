@@ -13,6 +13,7 @@
 @synthesize currentPage;
 @synthesize numberOfPages;
 @synthesize hidesForSinglePage;
+@synthesize wrap;
 @synthesize dotColour;
 @synthesize selectedDotColour;
 @synthesize dotSpacing;
@@ -65,17 +66,25 @@
 
 - (void)setCurrentPage:(NSInteger)page
 {
-	if (page >= 0 && page < numberOfPages)
-	{
-		currentPage = page;
-		[self setNeedsDisplay];
-	}
+	if (wrap)
+    {
+        page = (page + numberOfPages) % numberOfPages;
+    }
+    else
+    {
+        page = MIN(MAX(0, page), numberOfPages - 1);
+    }
+    currentPage = page;
+    [self setNeedsDisplay];
 }
 
 - (void)setNumberOfPages:(NSInteger)pages
 {
-	numberOfPages = pages;
-	[self setNeedsDisplay];
+	if (numberOfPages != pages)
+    {
+        numberOfPages = pages;
+        [self setNeedsDisplay];
+    }
 	if (currentPage >= numberOfPages)
 	{
 		self.currentPage = numberOfPages - 1;

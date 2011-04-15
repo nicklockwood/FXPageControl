@@ -20,3 +20,7 @@ CGFloat dotSpacing;
 CGFloat dotSize;
 
 These properties must be set programmatically in your view controller, as Interface Builder does not expose a way to edit custom fields. Alternatively, you could create a subclass of PageControl that overrides the default values for these fields, set in the - (void)setup; method.
+
+Unlike the standard UIPageControl, you can also make the CustomPageControl wrap around by setting the following property to YES:
+
+BOOL wrap;

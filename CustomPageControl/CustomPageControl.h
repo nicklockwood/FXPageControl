@@ -10,6 +10,7 @@
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign) BOOL hidesForSinglePage;
+@property (nonatomic, assign) BOOL wrap;
 
 @property (nonatomic, retain) UIColor *dotColour;
 @property (nonatomic, retain) UIColor *selectedDotColour;

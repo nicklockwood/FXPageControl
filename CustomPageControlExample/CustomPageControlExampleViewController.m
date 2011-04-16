@@ -9,13 +9,6 @@
 #import "CustomPageControlExampleViewController.h"
 
 
-@interface CustomPageControlExampleViewController()
-
-@property (nonatomic, assign) NSInteger prevPageIndex;
-
-@end
-
-
 @implementation CustomPageControlExampleViewController
 
 @synthesize scrollView1;
@@ -24,7 +17,6 @@
 @synthesize pageControl2;
 @synthesize contentView1;
 @synthesize contentView2;
-@synthesize prevPageIndex;
 
 
 - (void)dealloc
@@ -48,8 +40,7 @@
     scrollView1.showsHorizontalScrollIndicator = NO;
     [scrollView1 addSubview:contentView1];
     pageControl1.numberOfPages = contentView1.bounds.size.width / scrollView1.bounds.size.width;
-    pageControl1.selectedDotColour = [UIColor blackColor];
-    pageControl1.dotColour = [UIColor colorWithWhite:0.0 alpha:0.25];
+    pageControl1.defersCurrentPageDisplay = YES;
     
     //set up second view
     scrollView2.pagingEnabled = YES;
@@ -57,10 +48,12 @@
     scrollView2.showsHorizontalScrollIndicator = NO;
     [scrollView2 addSubview:contentView2];
     pageControl2.numberOfPages = contentView2.bounds.size.width / scrollView2.bounds.size.width;
+    pageControl2.defersCurrentPageDisplay = YES;
     pageControl2.selectedDotColour = [UIColor redColor];
     pageControl2.dotColour = [UIColor blueColor];
     pageControl2.dotSize = 10.0;
     pageControl2.dotSpacing = 30.0;
+    pageControl2.wrap = YES;
 }
 
 - (void)viewDidUnload
@@ -94,20 +87,16 @@
     //update page control when scrollview scrolls
     //prevent flicker by only updating when page index has changed
     NSInteger pageIndex = round(scrollView.contentOffset.x / scrollView.bounds.size.width);
-    if (pageIndex != prevPageIndex)
+    if (scrollView == scrollView1)
     {
-        if (scrollView == scrollView1)
-        {
-            pageControl1.currentPage = pageIndex;
-            pageControl1.selectedDotColour = (pageIndex == 2)? [UIColor whiteColor]: [UIColor blackColor];
-            pageControl1.dotColour = (pageIndex == 2)?
-                [UIColor colorWithWhite:1.0 alpha:0.25]: [UIColor colorWithWhite:0.0 alpha:0.25];
-        }
-        else
-        {
-            pageControl2.currentPage = pageIndex;
-        }
-        prevPageIndex = pageIndex;
+        pageControl1.currentPage = pageIndex;
+        pageControl1.selectedDotColour = (pageIndex == 2)? [UIColor whiteColor]: [UIColor blackColor];
+        pageControl1.dotColour = (pageIndex == 2)?
+            [UIColor colorWithWhite:1.0 alpha:0.25]: [UIColor colorWithWhite:0.0 alpha:0.25];
+    }
+    else
+    {
+        pageControl2.currentPage = pageIndex;
     }
 }
 

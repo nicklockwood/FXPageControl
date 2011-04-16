@@ -300,7 +300,9 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">And that's it. Thanks for watching</string>
+						<string type="base64-UTF8" key="IBUIText">VGhlIFBhZ2VDb250cm9sIGFsc28gYWxsb3dzIHdyYXBwaW5nLiBJZiB5b3UgdGFwIHBhc3QgdGhlIGxh
+c3QgZG90LCBpdCB3aWxsIHNjcm9sbCBiYWNrIHRvIHRoZSBiZWdpbm5pbmcuCgpUaGF0J3MgaXQhIFRo
+YW5rcyBmb3Igd2F0Y2hpbmc</string>
 						<reference key="IBUIFont" ref="648357940"/>
 						<reference key="IBUITextColor" ref="1058730577"/>
 						<nil key="IBUIHighlightedColor"/>

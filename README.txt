@@ -1,14 +1,13 @@
 Purpose
 --------------
 
-CustomPageControl is a replacement for Apple's UIPageControl that replicates all the functionality of the standard control, but adds the ability to edit the dot
-colour, size and spacing.
+CustomPageControl is a drop-in replacement for Apple's UIPageControl that replicates all the functionality of the standard control, but adds the ability to edit the dot colour, size and spacing.
 
 
 Installation
 --------------
 
-Just drag the CustomPageControl.m and .h files into your project. In Interface Builder, add a new view to your window. Set the size to approximately 320 x 36 pixels and set the class to CustomPageControl.
+Just drag the CustomPageControl.m and .h files into your project. In Interface Builder add a new view to your window. Set the size to approximately 320 x 36 pixels and set the class to CustomPageControl (you can also create the control programmatically in using [[alloc] initWithRect:CGRectMake(0,0,320,36)]).
 
 You can now wire up the CustomPageControl in exactly the same way as a standard UIPageControl, as described in Apple's documentation.
 

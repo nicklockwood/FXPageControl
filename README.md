@@ -28,4 +28,4 @@ These properties must be set programmatically in your view controller, as Interf
 
 Unlike the standard UIPageControl, you can also make the CustomPageControl wrap around by setting the following property to YES:
 
-	BOOL wrap;
+	@property (nonatomic, assign) BOOL wrap;

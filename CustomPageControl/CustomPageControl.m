@@ -8,7 +8,7 @@
 //
 //  Get the latest version of CustomPageControl from either of these locations:
 //
-//  http://charcoaldesign.co.uk/source/iphone#custompagecontrol
+//  http://charcoaldesign.co.uk/source/cocoa#custompagecontrol
 //  https://github.com/demosthenese/CustomPageControl
 //
 //  This software is provided 'as-is', without any express or implied

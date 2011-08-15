@@ -1,5 +1,5 @@
 CustomPageControl
-version 1.1, April 10th, 2010
+version 1.1.1, August 15th, 2011
 
 Copyright (C) 2010 Charcoal Design
 

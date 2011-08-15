@@ -1,3 +1,7 @@
+Version 1.1.1
+
+- View now redraws itself automatically if bounds are changed
+
 Version 1.1
 
 - Added wrap property

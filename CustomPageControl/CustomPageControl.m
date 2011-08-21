@@ -9,7 +9,7 @@
 //  Get the latest version of CustomPageControl from either of these locations:
 //
 //  http://charcoaldesign.co.uk/source/cocoa#custompagecontrol
-//  https://github.com/demosthenese/CustomPageControl
+//  https://github.com/nicklockwood/CustomPageControl
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages

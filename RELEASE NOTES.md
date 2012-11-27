@@ -2,7 +2,6 @@ Version 1.2
 
 - Renamed to FXPageControl
 - FXPageControl now requires ARC. See README for details
-- FXPageControl is now a subclass of UIPageControl
 - Added support for custom dot images
 - Renamed wrap property to wrapEnabled
 

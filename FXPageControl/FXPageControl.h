@@ -1,15 +1,15 @@
 //
-//  CustomPageControl.h
+//  FXPageControl.h
 //
-//  Version 1.1.1
+//  Version 1.2
 //
 //  Created by Nick Lockwood on 07/01/2010.
-//  Copyright 2010 Charcoal Design. All rights reserved.
+//  Copyright 2010 Charcoal Design
 //
-//  Get the latest version of CustomPageControl from either of these locations:
+//  Distributed under the permissive zlib License
+//  Get the latest version of FXPageControl from here:
 //
-//  http://charcoaldesign.co.uk/source/cocoa#custompagecontrol
-//  https://github.com/nicklockwood/CustomPageControl
+//  https://github.com/nicklockwood/FXPageControl
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -30,19 +30,38 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-@interface CustomPageControl : UIControl
+@class FXPageControl;
 
+
+@protocol FXPageControlDelegate <NSObject>
+@optional
+
+- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
+- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
+- (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
+- (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
+
+@end
+
+
+@interface FXPageControl : UIControl
+
+- (void)setUp;
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
 - (void)updateCurrentPageDisplay;
+
+@property (nonatomic, unsafe_unretained) IBOutlet id <FXPageControlDelegate> delegate;
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger numberOfPages;
 @property (nonatomic, assign) BOOL defersCurrentPageDisplay;
 @property (nonatomic, assign) BOOL hidesForSinglePage;
-@property (nonatomic, assign) BOOL wrap;
+@property (nonatomic, assign, getter = isWrapEnabled) BOOL wrapEnabled;
 
-@property (nonatomic, retain) UIColor *dotColour;
-@property (nonatomic, retain) UIColor *selectedDotColour;
+@property (nonatomic, strong) UIColor *dotColor;
+@property (nonatomic, strong) UIColor *selectedDotColor;
+@property (nonatomic, strong) UIImage *dotImage;
+@property (nonatomic, strong) UIImage *selectedDotImage;
 @property (nonatomic, assign) CGFloat dotSpacing;
 @property (nonatomic, assign) CGFloat dotSize;
 

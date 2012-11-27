@@ -6,10 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "CustomPageControlExampleViewController.h"
+#import "ViewController.h"
 
 
-@implementation CustomPageControlExampleViewController
+@implementation ViewController
 
 @synthesize scrollView1;
 @synthesize scrollView2;
@@ -17,18 +17,6 @@
 @synthesize pageControl2;
 @synthesize contentView1;
 @synthesize contentView2;
-
-
-- (void)dealloc
-{
-    [scrollView1 release];
-    [scrollView2 release];
-    [pageControl1 release];
-    [pageControl2 release];
-    [contentView1 release];
-    [contentView2 release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -49,11 +37,11 @@
     [scrollView2 addSubview:contentView2];
     pageControl2.numberOfPages = contentView2.bounds.size.width / scrollView2.bounds.size.width;
     pageControl2.defersCurrentPageDisplay = YES;
-    pageControl2.selectedDotColour = [UIColor redColor];
-    pageControl2.dotColour = [UIColor blueColor];
+    pageControl2.selectedDotColor = [UIColor redColor];
+    pageControl2.dotColor = [UIColor blueColor];
     pageControl2.dotSize = 10.0;
     pageControl2.dotSpacing = 30.0;
-    pageControl2.wrap = YES;
+    pageControl2.wrapEnabled = YES;
 }
 
 - (void)viewDidUnload
@@ -67,7 +55,7 @@
     self.contentView2 = nil;
 }
 
-- (IBAction)pageControlAction:(CustomPageControl *)sender
+- (IBAction)pageControlAction:(FXPageControl *)sender
 {
     //update scrollview when pagecontrol is tapped
     if (sender == pageControl1)
@@ -90,8 +78,8 @@
     if (scrollView == scrollView1)
     {
         pageControl1.currentPage = pageIndex;
-        pageControl1.selectedDotColour = (pageIndex == 2)? [UIColor whiteColor]: [UIColor blackColor];
-        pageControl1.dotColour = (pageIndex == 2)?
+        pageControl1.selectedDotColor = (pageIndex == 2)? [UIColor whiteColor]: [UIColor blackColor];
+        pageControl1.dotColor = (pageIndex == 2)?
             [UIColor colorWithWhite:1.0 alpha:0.25]: [UIColor colorWithWhite:0.0 alpha:0.25];
     }
     else

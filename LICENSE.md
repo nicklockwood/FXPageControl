@@ -1,5 +1,6 @@
-CustomPageControl
-version 1.1.1, August 15th, 2011
+FXPageControl
+
+version 1.2, November 27th, 2012
 
 Copyright (C) 2010 Charcoal Design
 

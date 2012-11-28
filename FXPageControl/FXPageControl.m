@@ -130,7 +130,7 @@
 			}
 			if (dotImage)
 			{
-				[dotImage drawInRect:CGRectMake(offset + (_dotSize + _dotSpacing) * i + (_dotSize - dotImage.size.width) / 2.0f, (self.frame.size.height / 2.0f) - (_dotImage.size.height / 2.0f), dotImage.size.width, dotImage.size.height)];
+				[dotImage drawInRect:CGRectMake(offset + (_dotSize + _dotSpacing) * i + (_dotSize - dotImage.size.width) / 2.0f, (self.frame.size.height / 2.0f) - (dotImage.size.height / 2.0f), dotImage.size.width, dotImage.size.height)];
 			}
 			else
 			{

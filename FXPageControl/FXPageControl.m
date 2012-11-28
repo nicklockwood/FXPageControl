@@ -86,9 +86,7 @@
 - (void)drawRect:(CGRect)rect
 {
 	if (_numberOfPages > 1 || !_hidesForSinglePage)
-	{
-		CGContextRef context = UIGraphicsGetCurrentContext();
-		
+	{		
 		CGFloat width = [self sizeForNumberOfPages:_numberOfPages].width;
 		CGFloat offset = (self.frame.size.width - width) / 2.0f;
 		
@@ -132,11 +130,12 @@
 			}
 			if (dotImage)
 			{
-				[dotImage drawInRect:CGRectMake(offset + (_dotSize + _dotSpacing) * i +  (_dotSize - dotImage.size.width) / 2.0f, (self.frame.size.height / 2.0f) - (_dotImage.size.height / 2.0f), _dotImage.size.width, _dotImage.size.height)];
+				[dotImage drawInRect:CGRectMake(offset + (_dotSize + _dotSpacing) * i + (_dotSize - dotImage.size.width) / 2.0f, (self.frame.size.height / 2.0f) - (_dotImage.size.height / 2.0f), dotImage.size.width, dotImage.size.height)];
 			}
 			else
 			{
                 [dotColor setFill];
+                CGContextRef context = UIGraphicsGetCurrentContext();
 				CGContextFillEllipseInRect(context, CGRectMake(offset + (_dotSize + _dotSpacing) * i, (self.frame.size.height / 2.0f) - (_dotSize / 2.0f), _dotSize, _dotSize));
 			}
 		}

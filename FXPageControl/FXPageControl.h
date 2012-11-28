@@ -30,18 +30,17 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
-@class FXPageControl;
+
+#import <Availability.h>
+#undef weak_delegate
+#if __has_feature(objc_arc_weak)
+#define weak_delegate weak
+#else
+#define weak_delegate unsafe_unretained
+#endif
 
 
-@protocol FXPageControlDelegate <NSObject>
-@optional
-
-- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
-- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
-- (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
-- (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
-
-@end
+@protocol FXPageControlDelegate;
 
 
 @interface FXPageControl : UIControl
@@ -50,7 +49,7 @@
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
 - (void)updateCurrentPageDisplay;
 
-@property (nonatomic, unsafe_unretained) IBOutlet id <FXPageControlDelegate> delegate;
+@property (nonatomic, weak_delegate) IBOutlet id <FXPageControlDelegate> delegate;
 
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, assign) NSInteger numberOfPages;
@@ -64,5 +63,16 @@
 @property (nonatomic, strong) UIImage *selectedDotImage;
 @property (nonatomic, assign) CGFloat dotSpacing;
 @property (nonatomic, assign) CGFloat dotSize;
+
+@end
+
+
+@protocol FXPageControlDelegate <NSObject>
+@optional
+
+- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
+- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
+- (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
+- (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
 
 @end

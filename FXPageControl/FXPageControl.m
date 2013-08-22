@@ -1,7 +1,7 @@
 //
 //  FXPageControl.m
 //
-//  Version 1.2
+//  Version 1.2.1
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design
@@ -39,6 +39,16 @@
 #endif
 
 
+@implementation NSObject (FXPageControl)
+
+- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index { return nil; }
+- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index { return nil; }
+- (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index { return nil; }
+- (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index { return nil; }
+
+@end
+
+
 @implementation FXPageControl
 
 - (void)setUp
@@ -48,8 +58,6 @@
     [self setValue:@YES forKeyPath:@"layer.needsDisplayOnBoundsChange"];
     
 	//set defaults
-    _selectedDotColor = [UIColor blackColor];
-	_dotColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 	_dotSpacing = 10.0f;
 	_dotSize = 6.0f;
 }
@@ -97,35 +105,19 @@
 			if (i == _currentPage)
 			{
 				[_selectedDotColor setFill];
-				if ([_delegate respondsToSelector:@selector(pageControl:selectedImageForDotAtIndex:)])
-				{
-					dotImage = [_delegate pageControl:self selectedImageForDotAtIndex:i];
-				}
-                else if ([_delegate respondsToSelector:@selector(pageControl:selectedColorForDotAtIndex:)])
-				{
-					dotColor = [_delegate pageControl:self selectedColorForDotAtIndex:i];
-				}
-                else
-                {
-                    dotImage = _selectedDotImage;
-                    dotColor = _selectedDotColor;
-                }
+				dotImage = [_delegate pageControl:self selectedImageForDotAtIndex:i] ?: _selectedDotImage;
+				dotColor = [_delegate pageControl:self selectedColorForDotAtIndex:i] ?: _selectedDotColor ?: [UIColor blackColor];
 			}
 			else
 			{
 				[_dotColor setFill];
-				if ([_delegate respondsToSelector:@selector(pageControl:imageForDotAtIndex:)])
-				{
-					dotImage = [_delegate pageControl:self selectedImageForDotAtIndex:i];
-				}
-                else if ([_delegate respondsToSelector:@selector(pageControl:colorForDotAtIndex:)])
-				{
-					dotColor = [_delegate pageControl:self colorForDotAtIndex:i];
-				}
-                else
+                dotImage = [_delegate pageControl:self imageForDotAtIndex:i] ?: _dotImage;
+				dotColor = [_delegate pageControl:self colorForDotAtIndex:i] ?: _dotColor;
+                if (!dotColor)
                 {
-                    dotImage = _dotImage;
-                    dotColor = _dotColor;
+                    //fall back to selected dot color with reduced alpha
+                    dotColor = [_delegate pageControl:self selectedColorForDotAtIndex:i] ?: _selectedDotColor ?: [UIColor blackColor];
+                    dotColor = [dotColor colorWithAlphaComponent:0.25f];
                 }
 			}
 			if (dotImage)

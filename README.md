@@ -8,8 +8,8 @@ Supported iOS & SDK Versions
 -----------------------------
 
 * Supported build target - iOS 6.0 (Xcode 4.5)
-* Earliest supported deployment target - iOS 5.0 (Xcode 4.2)
-* Earliest compatible deployment target - iOS 3.0
+* Earliest supported deployment target - iOS 5.0
+* Earliest compatible deployment target - iOS 4.3
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this iOS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
 
@@ -44,9 +44,11 @@ FXPageControl supports all of the methods of UIPageControl (with the exception o
 	@property (nonatomic, assign) CGFloat dotSpacing;
 	@property (nonatomic, assign) CGFloat dotSize;
 
+The dotColor properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the selectedDotColor, the dotColor will be automatically set to the same color, but with 25% opacity.
+ 
 The dotImage properties are nil by default and will override the color options if set.
 
-These properties must be set programmatically in your view controller, as Interface Builder does not expose a way to edit custom fields. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `setUp` method.
+These properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attirbutes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `setUp` method.
 
 Unlike the standard UIPageControl, you can also make the FXPageControl wrap around by setting the following property to YES:
 
@@ -64,3 +66,5 @@ The FXPageControlDelegate provides the following methods, all optional:
     - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
     - (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
     - (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
+    
+If you need to change the color or image for a specific dot at runtime, call -setNeedsDisplay on the FXPageControl to force it to redraw.

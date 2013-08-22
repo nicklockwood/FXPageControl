@@ -1,3 +1,9 @@
+Version 1.2.1
+
+- Fixed bug in custom dot image delegate method
+- Now sets dotColor automatically if you specify selectedDotColor
+- Added Podspec
+
 Version 1.2
 
 - Renamed to FXPageControl

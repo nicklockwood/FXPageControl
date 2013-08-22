@@ -1,6 +1,6 @@
 FXPageControl
 
-version 1.2, November 27th, 2012
+version 1.2.1, August 22nd, 2013
 
 Copyright (C) 2010 Charcoal Design
 

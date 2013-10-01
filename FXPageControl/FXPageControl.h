@@ -63,6 +63,7 @@
 @property (nonatomic, strong) UIImage *selectedDotImage;
 @property (nonatomic, assign) CGFloat dotSpacing;
 @property (nonatomic, assign) CGFloat dotSize;
+@property (nonatomic, assign) BOOL squareDots;
 
 @end
 

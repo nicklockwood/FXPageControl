@@ -60,6 +60,7 @@
 	//set defaults
 	_dotSpacing = 10.0f;
 	_dotSize = 6.0f;
+    _squareDots = NO;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -128,7 +129,14 @@
 			{
                 [dotColor setFill];
                 CGContextRef context = UIGraphicsGetCurrentContext();
-				CGContextFillEllipseInRect(context, CGRectMake(offset + (_dotSize + _dotSpacing) * i, (self.frame.size.height / 2.0f) - (_dotSize / 2.0f), _dotSize, _dotSize));
+                if(_squareDots)
+                {
+                    CGContextFillRect(context, CGRectMake(offset + (_dotSize + _dotSpacing) * i, (self.frame.size.height / 2.0f) - (_dotSize / 2.0f), _dotSize, _dotSize));
+                }
+                else
+                {
+                    CGContextFillEllipseInRect(context, CGRectMake(offset + (_dotSize + _dotSpacing) * i, (self.frame.size.height / 2.0f) - (_dotSize / 2.0f), _dotSize, _dotSize));
+                }
 			}
 		}
 	}

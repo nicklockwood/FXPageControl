@@ -7,7 +7,7 @@ FXPageControl is a drop-in replacement for Apple's UIPageControl that replicates
 Supported iOS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 6.0 (Xcode 4.5)
+* Supported build target - iOS 7.0 (Xcode 5.0)
 * Earliest supported deployment target - iOS 5.0
 * Earliest compatible deployment target - iOS 4.3
 
@@ -27,7 +27,7 @@ Installation
 
 Just drag the FXPageControl.m and .h files into your project. In Interface Builder add a new view to your window. Set the size to approximately 320 x 36 pixels and set the class to FXPageControl (you can also create the control programmatically by using:
 
-	[[alloc] initWithRect:CGRectMake(0.0f, 0.0f, 320.0f, 36.0f)])
+	[[FXPageControl alloc] initWithRect:CGRectMake(0.0f, 0.0f, 320.0f, 36.0f)])
 
 You can now wire up the FXPageControl in exactly the same way as a standard UIPageControl, as described in Apple's documentation.
 
@@ -35,20 +35,39 @@ You can now wire up the FXPageControl in exactly the same way as a standard UIPa
 Configuration
 ---------------
 
-FXPageControl supports all of the methods of UIPageControl (with the exception of the tint options introduced in iOS 6). To change the dot appearance, size and spacing, use the following properties of the control:
+FXPageControl supports all of the methods of UIPageControl (with the exception of the tint options introduced in iOS 6). To change the dot appearance, shape, size and spacing, use the following properties of the control:
 
-	@property (nonatomic, strong) UIColor *dotColour;
-	@property (nonatomic, strong) UIColor *selectedDotColour;
-	@property (nonatomic, strong) UIImage *dotImage;
-	@property (nonatomic, strong) UIImage *selectedDotImage;
-	@property (nonatomic, assign) CGFloat dotSpacing;
-	@property (nonatomic, assign) CGFloat dotSize;
+    @property (nonatomic, strong) UIImage *dotImage;
+    @property (nonatomic, assign) CGPathRef dotShape;
+    @property (nonatomic, assign) CGFloat dotSize;
+    @property (nonatomic, strong) UIColor *dotColor;
+    @property (nonatomic, strong) UIColor *dotShadowColor;
+    @property (nonatomic, assign) CGFloat dotShadowBlur;
+    @property (nonatomic, assign) CGSize dotShadowOffset;
+    
+    @property (nonatomic, strong) UIImage *selectedDotImage;
+    @property (nonatomic, assign) CGPathRef selectedDotShape;
+    @property (nonatomic, assign) CGFloat selectedDotSize;
+    @property (nonatomic, strong) UIColor *selectedDotColor;
+    @property (nonatomic, strong) UIColor *selectedDotShadowColor;
+    @property (nonatomic, assign) CGFloat selectedDotShadowBlur;
+    @property (nonatomic, assign) CGSize selectedDotShadowOffset;
+    
+    @property (nonatomic, assign) CGFloat dotSpacing;
 
-The dotColor properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the selectedDotColor, the dotColor will be automatically set to the same color, but with 25% opacity.
+The dotColor/selectedDotColor properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the selectedDotColor, the dotColor will be automatically set to the same color, but with 25% opacity.
  
-The dotImage properties are nil by default and will override the color options if set.
+The dotShape/selectedDotShape is NULL by default, and will be treated as FXPageControlDotShapeCircle. You can either use one of the supplied shape constants, or supply your own CGPath to be drawn for each dot. Note that the path will be retained.
 
-These properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attirbutes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `setUp` method.
+The selectedDotSize is 0 by default and will default to the same size as the dotSize (for backwards compatibility).
+
+The dotShadowColor/selectedDotShadowColor is nil by default, and will be treated as transparent.
+
+The dotImage/selectedDotImage is nil by default and will override the shape and color options if set.
+
+The dotSpacing specifies the spacing (in points) between the regular (unselected) dots. There is no equivalent selectedDotSpacing property.
+
+Most of these properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attributes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `setUp` method.
 
 Unlike the standard UIPageControl, you can also make the FXPageControl wrap around by setting the following property to YES:
 
@@ -62,9 +81,14 @@ To set the dot image or color individually, implement the FXPageControl delegate
 
 The FXPageControlDelegate provides the following methods, all optional:
 
-    - (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
-    - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
     - (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
-    - (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
+    - (CGPathRef)pageControl:(FXPageControl *)pageControl shapeForDotAtIndex:(NSInteger)index;
+    - (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
     
-If you need to change the color or image for a specific dot at runtime, call -setNeedsDisplay on the FXPageControl to force it to redraw.
+    - (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
+    - (CGPathRef)pageControl:(FXPageControl *)pageControl selectedShapeForDotAtIndex:(NSInteger)index;
+    - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
+
+If you need to change the color shape or image for a specific dot at runtime, call -setNeedsDisplay on the FXPageControl to force it to redraw.
+
+Note that CGPathRefs that are created and returned from the pageControl:shapeForDotAtIndex: method should be autoreleased to prevent memory leaks. The simplest way to do this may be to use a UIBezierPath to create the CGPath.

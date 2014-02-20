@@ -1,3 +1,10 @@
+Version 1.3
+
+- Added support for custom dot shapes
+- Added support for dot shadows
+- Can now specify a different size for selected dot
+- Now complies with -Weverything warning level
+
 Version 1.2.1
 
 - Fixed bug in custom dot image delegate method

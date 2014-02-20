@@ -1,7 +1,7 @@
 //
 //  FXPageControl.h
 //
-//  Version 1.2.1
+//  Version 1.3
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design
@@ -31,6 +31,11 @@
 //
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
+#import <UIKit/UIKit.h>
+
+
 #import <Availability.h>
 #undef weak_delegate
 #if __has_feature(objc_arc_weak)
@@ -38,6 +43,11 @@
 #else
 #define weak_delegate unsafe_unretained
 #endif
+
+
+extern const CGPathRef FXPageControlDotShapeCircle;
+extern const CGPathRef FXPageControlDotShapeSquare;
+extern const CGPathRef FXPageControlDotShapeTriangle;
 
 
 @protocol FXPageControlDelegate;
@@ -57,12 +67,23 @@
 @property (nonatomic, assign) BOOL hidesForSinglePage;
 @property (nonatomic, assign, getter = isWrapEnabled) BOOL wrapEnabled;
 
-@property (nonatomic, strong) UIColor *dotColor;
-@property (nonatomic, strong) UIColor *selectedDotColor;
 @property (nonatomic, strong) UIImage *dotImage;
-@property (nonatomic, strong) UIImage *selectedDotImage;
-@property (nonatomic, assign) CGFloat dotSpacing;
+@property (nonatomic, assign) CGPathRef dotShape;
 @property (nonatomic, assign) CGFloat dotSize;
+@property (nonatomic, strong) UIColor *dotColor;
+@property (nonatomic, strong) UIColor *dotShadowColor;
+@property (nonatomic, assign) CGFloat dotShadowBlur;
+@property (nonatomic, assign) CGSize dotShadowOffset;
+
+@property (nonatomic, strong) UIImage *selectedDotImage;
+@property (nonatomic, assign) CGPathRef selectedDotShape;
+@property (nonatomic, assign) CGFloat selectedDotSize;
+@property (nonatomic, strong) UIColor *selectedDotColor;
+@property (nonatomic, strong) UIColor *selectedDotShadowColor;
+@property (nonatomic, assign) CGFloat selectedDotShadowBlur;
+@property (nonatomic, assign) CGSize selectedDotShadowOffset;
+
+@property (nonatomic, assign) CGFloat dotSpacing;
 
 @end
 
@@ -70,9 +91,15 @@
 @protocol FXPageControlDelegate <NSObject>
 @optional
 
-- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
-- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
 - (UIImage *)pageControl:(FXPageControl *)pageControl imageForDotAtIndex:(NSInteger)index;
+- (CGPathRef)pageControl:(FXPageControl *)pageControl shapeForDotAtIndex:(NSInteger)index;
+- (UIColor *)pageControl:(FXPageControl *)pageControl colorForDotAtIndex:(NSInteger)index;
+
 - (UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
+- (CGPathRef)pageControl:(FXPageControl *)pageControl selectedShapeForDotAtIndex:(NSInteger)index;
+- (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
 
 @end
+
+
+#pragma GCC diagnostic pop

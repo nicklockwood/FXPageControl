@@ -97,6 +97,12 @@ Note that CGPathRefs that are created and returned from the pageControl:shapeFor
 Release Notes
 --------------
 
+Version 1.3.1
+
+- Custom dot images are now correctly centered
+- Fixed some additional warnings when targeting iOS 5+
+- Fixed some layout issues in the example project
+
 Version 1.3
 
 - Added support for custom dot shapes

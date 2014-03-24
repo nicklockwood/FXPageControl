@@ -1,7 +1,7 @@
 //
 //  FXPageControl.m
 //
-//  Version 1.3
+//  Version 1.3.1
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design
@@ -34,6 +34,8 @@
 
 
 #pragma GCC diagnostic ignored "-Wgnu"
+#pragma GCC diagnostic ignored "-Wreceiver-is-weak"
+#pragma GCC diagnostic ignored "-Warc-repeated-use-of-weak"
 #pragma GCC diagnostic ignored "-Wdirect-ivar-access"
 
 

@@ -97,6 +97,10 @@ Note that CGPathRefs that are created and returned from the pageControl:shapeFor
 Release Notes
 --------------
 
+Version 1.3.2
+
+- Added intrinsicContentSize method to support AutoLayout
+
 Version 1.3.1
 
 - Custom dot images are now correctly centered

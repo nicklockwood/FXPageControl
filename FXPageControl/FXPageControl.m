@@ -413,4 +413,9 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
     return dotSize;
 }
 
+- (CGSize)intrinsicContentSize
+{
+    return [self sizeThatFits:self.bounds.size];
+}
+
 @end

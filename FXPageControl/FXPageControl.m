@@ -134,7 +134,6 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
             
 			if (i == self.currentPage)
 			{
-				[self.selectedDotColor setFill];
 				dotImage = [self.delegate pageControl:self selectedImageForDotAtIndex:i] ?: self.selectedDotImage;
                 dotShape = [self.delegate pageControl:self selectedShapeForDotAtIndex:i] ?: self.selectedDotShape ?: self.dotShape;
 				dotColor = [self.delegate pageControl:self selectedColorForDotAtIndex:i] ?: self.selectedDotColor ?: [UIColor blackColor];
@@ -145,7 +144,6 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 			}
 			else
 			{
-				[self.dotColor setFill];
                 dotImage = [self.delegate pageControl:self imageForDotAtIndex:i] ?: self.dotImage;
                 dotShape = [self.delegate pageControl:self shapeForDotAtIndex:i] ?: self.dotShape;
 				dotColor = [self.delegate pageControl:self colorForDotAtIndex:i] ?: self.dotColor;
@@ -161,6 +159,8 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
                 dotSize = self.dotSize;
 			}
             
+            [dotColor setFill];
+            
             CGContextSaveGState(context);
             CGContextTranslateCTM(context, offset + (self.dotSize + self.dotSpacing) * i + self.dotSize / 2, self.frame.size.height / 2);
             if (dotShadowColor && ![dotShadowColor isEqual:[UIColor clearColor]])
@@ -173,7 +173,6 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 			}
 			else
 			{
-                [dotColor setFill];
                 if (!dotShape || dotShape == FXPageControlDotShapeCircle)
                 {
                     CGContextFillEllipseInRect(context, CGRectMake(-dotSize / 2, -dotSize / 2, dotSize, dotSize));

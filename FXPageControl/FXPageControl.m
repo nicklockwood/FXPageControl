@@ -1,7 +1,7 @@
 //
 //  FXPageControl.m
 //
-//  Version 1.3.2
+//  Version 1.4
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design
@@ -104,8 +104,8 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 
 - (CGSize)sizeForNumberOfPages:(__unused NSInteger)pageCount
 {
-    CGSize dotSize = CGSizeMake(self.dotSize + (self.dotSize + self.dotSpacing) * (self.numberOfPages - 1), self.dotSize);
-    return CGSizeMake(dotSize.width, MAX(dotSize.height, 36.0f));
+    CGFloat width = _dotSize + (_dotSize + _dotSpacing) * (_numberOfPages - 1);
+    return _vertical? CGSizeMake(_dotSize, width): CGSizeMake(width, _dotSize);
 }
 
 - (void)updateCurrentPageDisplay
@@ -115,14 +115,20 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 
 - (void)drawRect:(__unused CGRect)rect
 {
-	if (self.numberOfPages > 1 || !self.hidesForSinglePage)
+	if (_numberOfPages > 1 || !_hidesForSinglePage)
 	{
         CGContextRef context = UIGraphicsGetCurrentContext();
+        CGSize size = [self sizeForNumberOfPages:_numberOfPages];
+        if (_vertical)
+        {
+            CGContextTranslateCTM(context, self.frame.size.width / 2, (self.frame.size.height - size.height) / 2);
+        }
+        else
+        {
+            CGContextTranslateCTM(context, (self.frame.size.width - size.width) / 2, self.frame.size.height / 2);
+        }
         
-		CGFloat width = [self sizeForNumberOfPages:self.numberOfPages].width;
-		CGFloat offset = (self.frame.size.width - width) / 2;
-    
-		for (int i = 0; i < self.numberOfPages; i++)
+        for (int i = 0; i < _numberOfPages; i++)
 		{
 			UIImage *dotImage = nil;
             UIColor *dotColor = nil;
@@ -132,37 +138,39 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
             CGSize dotShadowOffset = CGSizeZero;
             CGFloat dotShadowBlur = 0;
             
-			if (i == self.currentPage)
+			if (i == _currentPage)
 			{
-				[self.selectedDotColor setFill];
-				dotImage = [self.delegate pageControl:self selectedImageForDotAtIndex:i] ?: self.selectedDotImage;
-                dotShape = [self.delegate pageControl:self selectedShapeForDotAtIndex:i] ?: self.selectedDotShape ?: self.dotShape;
-				dotColor = [self.delegate pageControl:self selectedColorForDotAtIndex:i] ?: self.selectedDotColor ?: [UIColor blackColor];
-                dotShadowBlur = self.selectedDotShadowBlur;
-                dotShadowColor = self.selectedDotShadowColor;
-                dotShadowOffset = self.selectedDotShadowOffset;
-                dotSize = self.selectedDotSize ?: self.dotSize;
+				[_selectedDotColor setFill];
+				dotImage = [_delegate pageControl:self selectedImageForDotAtIndex:i] ?: _selectedDotImage;
+                dotShape = [_delegate pageControl:self selectedShapeForDotAtIndex:i] ?: _selectedDotShape ?: _dotShape;
+				dotColor = [_delegate pageControl:self selectedColorForDotAtIndex:i] ?: _selectedDotColor ?: [UIColor blackColor];
+                dotShadowBlur = _selectedDotShadowBlur;
+                dotShadowColor = _selectedDotShadowColor;
+                dotShadowOffset = _selectedDotShadowOffset;
+                dotSize = _selectedDotSize ?: _dotSize;
 			}
 			else
 			{
-				[self.dotColor setFill];
-                dotImage = [self.delegate pageControl:self imageForDotAtIndex:i] ?: self.dotImage;
-                dotShape = [self.delegate pageControl:self shapeForDotAtIndex:i] ?: self.dotShape;
-				dotColor = [self.delegate pageControl:self colorForDotAtIndex:i] ?: self.dotColor;
+				[_dotColor setFill];
+                dotImage = [_delegate pageControl:self imageForDotAtIndex:i] ?: _dotImage;
+                dotShape = [_delegate pageControl:self shapeForDotAtIndex:i] ?: _dotShape;
+				dotColor = [_delegate pageControl:self colorForDotAtIndex:i] ?: _dotColor;
                 if (!dotColor)
                 {
                     //fall back to selected dot color with reduced alpha
-                    dotColor = [self.delegate pageControl:self selectedColorForDotAtIndex:i] ?: self.selectedDotColor ?: [UIColor blackColor];
+                    dotColor = [_delegate pageControl:self selectedColorForDotAtIndex:i] ?: _selectedDotColor ?: [UIColor blackColor];
                     dotColor = [dotColor colorWithAlphaComponent:0.25f];
                 }
-                dotShadowBlur = self.dotShadowBlur;
-                dotShadowColor = self.dotShadowColor;
-                dotShadowOffset = self.dotShadowOffset;
-                dotSize = self.dotSize;
+                dotShadowBlur = _dotShadowBlur;
+                dotShadowColor = _dotShadowColor;
+                dotShadowOffset = _dotShadowOffset;
+                dotSize = _dotSize;
 			}
             
             CGContextSaveGState(context);
-            CGContextTranslateCTM(context, offset + (self.dotSize + self.dotSpacing) * i + self.dotSize / 2, self.frame.size.height / 2);
+            CGFloat offset = (_dotSize + _dotSpacing) * i + _dotSize / 2;
+            CGContextTranslateCTM(context, _vertical? 0: offset, _vertical? offset: 0);
+            
             if (dotShadowColor && ![dotShadowColor isEqual:[UIColor clearColor]])
             {
                 CGContextSetShadowWithColor(context, dotShadowOffset, dotShadowBlur, dotShadowColor.CGColor);
@@ -205,13 +213,13 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 
 - (NSInteger)clampedPageValue:(NSInteger)page
 {
-	if (self.wrapEnabled)
+	if (_wrapEnabled)
     {
-        return self.numberOfPages? (page + self.numberOfPages) % self.numberOfPages: 0;
+        return _numberOfPages? (page + _numberOfPages) % _numberOfPages: 0;
     }
     else
     {
-        return MIN(MAX(0, page), self.numberOfPages - 1);
+        return MIN(MAX(0, page), _numberOfPages - 1);
     }
 }
 
@@ -374,41 +382,45 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	if (_numberOfPages != pages)
     {
         _numberOfPages = pages;
-        if (self.currentPage >= pages)
+        if (_currentPage >= pages)
         {
-            self.currentPage = pages - 1;
+            _currentPage = pages - 1;
         }
         [self setNeedsDisplay];
     }
 }
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CGPoint point = [touch locationInView:self];
-	_currentPage = [self clampedPageValue:self.currentPage + ((point.x > self.frame.size.width / 2)? 1: -1)];
-    if (!self.defersCurrentPageDisplay)
+    BOOL forward = _vertical? (point.y > self.frame.size.height / 2): (point.x > self.frame.size.width / 2);
+	_currentPage = [self clampedPageValue:_currentPage + (forward? 1: -1)];
+    if (!_defersCurrentPageDisplay)
     {
         [self setNeedsDisplay];
     }
 	[self sendActionsForControlEvents:UIControlEventValueChanged];
-	return [super beginTrackingWithTouch:touch withEvent:event];
+	[super endTrackingWithTouch:touch withEvent:event];
 }
 
 - (CGSize)sizeThatFits:(__unused CGSize)size
 {
-    CGSize dotSize = [self sizeForNumberOfPages:self.numberOfPages];
-    if (self.selectedDotSize)
+    CGSize dotSize = [self sizeForNumberOfPages:_numberOfPages];
+    if (_selectedDotSize)
     {
-        dotSize.width += (self.selectedDotSize - self.dotSize);
-        dotSize.height = MAX(self.dotSize, self.selectedDotSize);
+        CGFloat width = (_selectedDotSize - _dotSize);
+        CGFloat height = MAX(36, MAX(_dotSize, _selectedDotSize));
+        dotSize.width = _vertical? height: dotSize.width + width;
+        dotSize.height = _vertical? dotSize.height + width: height;
+
     }
-    if ((self.dotShadowColor && ![self.dotShadowColor isEqual:[UIColor clearColor]]) ||
-        (self.selectedDotShadowColor && ![self.selectedDotShadowColor isEqual:[UIColor clearColor]]))
+    if ((_dotShadowColor && ![_dotShadowColor isEqual:[UIColor clearColor]]) ||
+        (_selectedDotShadowColor && ![_selectedDotShadowColor isEqual:[UIColor clearColor]]))
     {
-        dotSize.width += MAX(self.dotShadowOffset.width, self.selectedDotShadowOffset.width) * 2;
-        dotSize.height += MAX(self.dotShadowOffset.height, self.selectedDotShadowOffset.height) * 2;
-        dotSize.width += MAX(self.dotShadowBlur, self.selectedDotShadowBlur) * 2;
-        dotSize.height += MAX(self.dotShadowBlur, self.selectedDotShadowBlur) * 2;
+        dotSize.width += MAX(_dotShadowOffset.width, _selectedDotShadowOffset.width) * 2;
+        dotSize.height += MAX(_dotShadowOffset.height, _selectedDotShadowOffset.height) * 2;
+        dotSize.width += MAX(_dotShadowBlur, _selectedDotShadowBlur) * 2;
+        dotSize.height += MAX(_dotShadowBlur, _selectedDotShadowBlur) * 2;
     }
     return dotSize;
 }

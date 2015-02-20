@@ -7,7 +7,7 @@ FXPageControl is a drop-in replacement for Apple's UIPageControl that replicates
 Supported iOS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 7.0 (Xcode 5.0)
+* Supported build target - iOS 8.1 (Xcode 6.1, Apple LLVM compiler 6.0)
 * Earliest supported deployment target - iOS 5.0
 * Earliest compatible deployment target - iOS 4.3
 
@@ -25,9 +25,9 @@ If you wish to convert your whole project to ARC, comment out the #error line in
 Installation
 --------------
 
-Just drag the FXPageControl.m and .h files into your project. In Interface Builder add a new view to your window. Set the size to approximately 320 x 36 pixels and set the class to FXPageControl (you can also create the control programmatically by using:
+Just drag the FXPageControl.m and .h files into your project. In Interface Builder add a new view to your window. Set the size to approximately 320 x 36 points and set the class to FXPageControl (you can also create the control programmatically by using:
 
-	[[FXPageControl alloc] initWithRect:CGRectMake(0.0f, 0.0f, 320.0f, 36.0f)])
+    [[FXPageControl alloc] initWithFrame:CGRectMake(0, 0, 320, 36)])
 
 You can now wire up the FXPageControl in exactly the same way as a standard UIPageControl, as described in Apple's documentation.
 
@@ -55,29 +55,35 @@ FXPageControl supports all of the methods of UIPageControl (with the exception o
     
     @property (nonatomic, assign) CGFloat dotSpacing;
 
-The dotColor/selectedDotColor properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the selectedDotColor, the dotColor will be automatically set to the same color, but with 25% opacity.
+The `dotColor`/`selectedDotColor` properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the `selectedDotColor`, the `dotColor` will be automatically set to the same color, but with 25% opacity.
  
-The dotShape/selectedDotShape is NULL by default, and will be treated as FXPageControlDotShapeCircle. You can either use one of the supplied shape constants, or supply your own CGPath to be drawn for each dot. Note that the path will be retained.
+The `dotShape`/`selectedDotShape` is `NULL` by default, and will be treated as `FXPageControlDotShapeCircle`. You can either use one of the supplied shape constants, or supply your own CGPath to be drawn for each dot. Note that the path will be retained.
 
-The selectedDotSize is 0 by default and will default to the same size as the dotSize (for backwards compatibility).
+The `selectedDotSize` is 0 by default and will default to the same size as the `dotSize` (for backwards compatibility).
 
-The dotShadowColor/selectedDotShadowColor is nil by default, and will be treated as transparent.
+The `dotShadowColor`/`selectedDotShadowColor` is `nil` by default, and will be treated as transparent.
 
-The dotImage/selectedDotImage is nil by default and will override the shape and color options if set.
+The `dotImage`/`selectedDotImage` is `nil` by default and will override the shape and color options if set.
 
-The dotSpacing specifies the spacing (in points) between the regular (unselected) dots. There is no equivalent selectedDotSpacing property.
+The `dotSpacing` specifies the spacing (in points) between the regular (unselected) dots. There is no equivalent "selectedDotSpacing" property.
 
-Most of these properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attributes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `setUp` method.
+Most of these properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attributes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `-setUp` method.
 
 Unlike the standard UIPageControl, you can also make the FXPageControl wrap around by setting the following property to YES:
 
-	@property (nonatomic, assign) BOOL wrapEnabled;
+	@property (nonatomic, assign, getter = isWrapEnabled) BOOL wrapEnabled;
+
+You can align the FXPageControl vertically by setting the following property to YES:
+
+    @property (nonatomic, assign, getter = isVertical) BOOL vertical;
+
+**Note:** with the exception of the CGPathRef values, all of these properties can be set directly in Interface Builder.
 	
 
 Delegate
 ------------
 
-To set the dot image or color individually, implement the FXPageControl delegate. This will allow you to specify different images or colors for different dot indexes. This can be used to implement the iPhone SpringBoard's appearance, where the first dot is replaced by a magnifiying glass icon.
+To set the dot image or color individually, implement the FXPageControl delegate. This will allow you to specify different images or colors for different dot indexes.
 
 The FXPageControlDelegate provides the following methods, all optional:
 
@@ -89,17 +95,23 @@ The FXPageControlDelegate provides the following methods, all optional:
     - (CGPathRef)pageControl:(FXPageControl *)pageControl selectedShapeForDotAtIndex:(NSInteger)index;
     - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
 
-If you need to change the color shape or image for a specific dot at runtime, call -setNeedsDisplay on the FXPageControl to force it to redraw.
+If you need to change the color shape or image for a specific dot at runtime, call `-setNeedsDisplay` on the FXPageControl to force it to redraw.
 
-Note that CGPathRefs that are created and returned from the pageControl:shapeForDotAtIndex: method should be autoreleased to prevent memory leaks. The simplest way to do this may be to use a UIBezierPath to create the CGPath.
+Note that CGPathRefs that are created and returned from the `-pageControl:shapeForDotAtIndex:` method should be autoreleased to prevent memory leaks. The simplest way to do this is to use a UIBezierPath to create the CGPath.
 
 
 Release Notes
 --------------
 
+Version 1.4
+
+- Added `vertical` property for implementing vertical page controls
+- Added `IBInspectable` attributes for simpler configuration within Interface Builder
+- Now handles taps on touch-up instead of touch-down, like the standard UIPageControl
+
 Version 1.3.2
 
-- Added intrinsicContentSize method to support AutoLayout
+- Added `intrinsicContentSize` method to support AutoLayout
 
 Version 1.3.1
 

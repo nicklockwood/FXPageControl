@@ -1,7 +1,7 @@
 //
 //  FXPageControl.h
 //
-//  Version 1.3.2
+//  Version 1.4
 //
 //  Created by Nick Lockwood on 07/01/2010.
 //  Copyright 2010 Charcoal Design
@@ -53,7 +53,7 @@ extern const CGPathRef FXPageControlDotShapeTriangle;
 @protocol FXPageControlDelegate;
 
 
-@interface FXPageControl : UIControl
+IB_DESIGNABLE @interface FXPageControl : UIControl
 
 - (void)setUp;
 - (CGSize)sizeForNumberOfPages:(NSInteger)pageCount;
@@ -61,29 +61,30 @@ extern const CGPathRef FXPageControlDotShapeTriangle;
 
 @property (nonatomic, weak_delegate) IBOutlet id <FXPageControlDelegate> delegate;
 
-@property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) NSInteger numberOfPages;
-@property (nonatomic, assign) BOOL defersCurrentPageDisplay;
-@property (nonatomic, assign) BOOL hidesForSinglePage;
-@property (nonatomic, assign, getter = isWrapEnabled) BOOL wrapEnabled;
+@property (nonatomic, assign) IBInspectable NSInteger currentPage;
+@property (nonatomic, assign) IBInspectable NSInteger numberOfPages;
+@property (nonatomic, assign) IBInspectable BOOL defersCurrentPageDisplay;
+@property (nonatomic, assign) IBInspectable BOOL hidesForSinglePage;
+@property (nonatomic, assign, getter = isWrapEnabled) IBInspectable BOOL wrapEnabled;
+@property (nonatomic, assign, getter = isVertical) IBInspectable BOOL vertical;
 
-@property (nonatomic, strong) UIImage *dotImage;
-@property (nonatomic, assign) CGPathRef dotShape;
-@property (nonatomic, assign) CGFloat dotSize;
-@property (nonatomic, strong) UIColor *dotColor;
-@property (nonatomic, strong) UIColor *dotShadowColor;
-@property (nonatomic, assign) CGFloat dotShadowBlur;
-@property (nonatomic, assign) CGSize dotShadowOffset;
+@property (nonatomic, strong) IBInspectable UIImage *dotImage;
+@property (nonatomic, assign) IBInspectable CGPathRef dotShape;
+@property (nonatomic, assign) IBInspectable CGFloat dotSize;
+@property (nonatomic, strong) IBInspectable UIColor *dotColor;
+@property (nonatomic, strong) IBInspectable UIColor *dotShadowColor;
+@property (nonatomic, assign) IBInspectable CGFloat dotShadowBlur;
+@property (nonatomic, assign) IBInspectable CGSize dotShadowOffset;
 
-@property (nonatomic, strong) UIImage *selectedDotImage;
-@property (nonatomic, assign) CGPathRef selectedDotShape;
-@property (nonatomic, assign) CGFloat selectedDotSize;
-@property (nonatomic, strong) UIColor *selectedDotColor;
-@property (nonatomic, strong) UIColor *selectedDotShadowColor;
-@property (nonatomic, assign) CGFloat selectedDotShadowBlur;
-@property (nonatomic, assign) CGSize selectedDotShadowOffset;
+@property (nonatomic, strong) IBInspectable UIImage *selectedDotImage;
+@property (nonatomic, assign) IBInspectable CGPathRef selectedDotShape;
+@property (nonatomic, assign) IBInspectable CGFloat selectedDotSize;
+@property (nonatomic, strong) IBInspectable UIColor *selectedDotColor;
+@property (nonatomic, strong) IBInspectable UIColor *selectedDotShadowColor;
+@property (nonatomic, assign) IBInspectable CGFloat selectedDotShadowBlur;
+@property (nonatomic, assign) IBInspectable CGSize selectedDotShadowOffset;
 
-@property (nonatomic, assign) CGFloat dotSpacing;
+@property (nonatomic, assign) IBInspectable CGFloat dotSpacing;
 
 @end
 

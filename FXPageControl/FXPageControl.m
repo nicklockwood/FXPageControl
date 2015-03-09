@@ -430,4 +430,20 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
     return [self sizeThatFits:self.bounds.size];
 }
 
+#pragma mark - Accessibility
+
+- (UIAccessibilityTraits)accessibilityTraits {
+    return UIAccessibilityTraitAdjustable;
+}
+
+- (void)accessibilityIncrement {
+    self.currentPage = self.currentPage + 1;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)accessibilityDecrement {
+    self.currentPage = self.currentPage - 1;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
 @end

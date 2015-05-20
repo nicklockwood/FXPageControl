@@ -75,6 +75,8 @@ IB_DESIGNABLE @interface FXPageControl : UIControl
 @property (nonatomic, strong) IBInspectable UIColor *dotShadowColor;
 @property (nonatomic, assign) IBInspectable CGFloat dotShadowBlur;
 @property (nonatomic, assign) IBInspectable CGSize dotShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat dotBorderWidth;
+@property (nonatomic, strong) IBInspectable UIColor *dotBorderColor;
 
 @property (nonatomic, strong) IBInspectable UIImage *selectedDotImage;
 @property (nonatomic, assign) IBInspectable CGPathRef selectedDotShape;
@@ -83,6 +85,8 @@ IB_DESIGNABLE @interface FXPageControl : UIControl
 @property (nonatomic, strong) IBInspectable UIColor *selectedDotShadowColor;
 @property (nonatomic, assign) IBInspectable CGFloat selectedDotShadowBlur;
 @property (nonatomic, assign) IBInspectable CGSize selectedDotShadowOffset;
+@property (nonatomic, assign) IBInspectable CGFloat selectedDotBorderWidth;
+@property (nonatomic, strong) IBInspectable UIColor *selectedDotBorderColor;
 
 @property (nonatomic, assign) IBInspectable CGFloat dotSpacing;
 

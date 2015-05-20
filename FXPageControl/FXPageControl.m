@@ -137,6 +137,8 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
             UIColor *dotShadowColor = nil;
             CGSize dotShadowOffset = CGSizeZero;
             CGFloat dotShadowBlur = 0;
+            CGFloat dotBorderWidth = 0;
+            UIColor *dotBorderColor = nil;
             
 			if (i == _currentPage)
 			{
@@ -147,6 +149,8 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
                 dotShadowBlur = _selectedDotShadowBlur;
                 dotShadowColor = _selectedDotShadowColor;
                 dotShadowOffset = _selectedDotShadowOffset;
+                dotBorderWidth = _selectedDotBorderWidth;
+                dotBorderColor = _selectedDotBorderColor;
                 dotSize = _selectedDotSize ?: _dotSize;
 			}
 			else
@@ -164,6 +168,8 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
                 dotShadowBlur = _dotShadowBlur;
                 dotShadowColor = _dotShadowColor;
                 dotShadowOffset = _dotShadowOffset;
+                dotBorderWidth = _dotBorderWidth;
+                dotBorderColor = _dotBorderColor;
                 dotSize = _dotSize;
 			}
             
@@ -182,29 +188,32 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 			else
 			{
                 [dotColor setFill];
+                [dotBorderColor setStroke];
+                CGContextSetLineWidth(context, dotBorderWidth);
                 if (!dotShape || dotShape == FXPageControlDotShapeCircle)
                 {
-                    CGContextFillEllipseInRect(context, CGRectMake(-dotSize / 2, -dotSize / 2, dotSize, dotSize));
+                    CGContextAddEllipseInRect(context, CGRectMake(-dotSize / 2, -dotSize / 2, dotSize, dotSize));
                 }
                 else if (dotShape == FXPageControlDotShapeSquare)
                 {
-                    CGContextFillRect(context, CGRectMake(-dotSize / 2, -dotSize / 2, dotSize, dotSize));
+                    CGContextAddRect(context, CGRectMake(-dotSize / 2, -dotSize / 2, dotSize, dotSize));
                 }
                 else if (dotShape == FXPageControlDotShapeTriangle)
                 {
-                    CGContextBeginPath(context);
                     CGContextMoveToPoint(context, 0, -dotSize / 2);
                     CGContextAddLineToPoint(context, dotSize / 2, dotSize / 2);
                     CGContextAddLineToPoint(context, -dotSize / 2, dotSize / 2);
                     CGContextAddLineToPoint(context, 0, -dotSize / 2);
-                    CGContextFillPath(context);
                 }
                 else
                 {
-                    CGContextBeginPath(context);
                     CGContextAddPath(context, dotShape);
-                    CGContextFillPath(context);
                 }
+                
+                if (dotBorderWidth == 0)
+                    CGContextDrawPath(context, kCGPathFill);
+                else
+                    CGContextDrawPath(context, kCGPathFillStroke);
 			}
             CGContextRestoreGState(context);
 		}
@@ -288,6 +297,24 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	}
 }
 
+- (void)setDotBorderWidth:(CGFloat)dotBorderWidth
+{
+    if (ABS(_dotBorderWidth - dotBorderWidth) > 0.001)
+    {
+        _dotBorderWidth = dotBorderWidth;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setDotBorderColor:(UIColor *)dotBorderColor
+{
+    if (_dotBorderColor != dotBorderColor)
+    {
+        _dotBorderColor = dotBorderColor;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)setSelectedDotImage:(UIImage *)dotImage
 {
 	if (_selectedDotImage != dotImage)
@@ -351,6 +378,24 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 		_selectedDotShadowOffset = dotShadowOffset;
 		[self setNeedsDisplay];
 	}
+}
+
+- (void)setSelectedDotBorderWidth:(CGFloat)selectedDotBorderWidth
+{
+    if (ABS(_selectedDotBorderWidth - selectedDotBorderWidth) > 0.001)
+    {
+        _selectedDotBorderWidth = selectedDotBorderWidth;
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setSelectedDotBorderColor:(UIColor *)dotColor
+{
+    if (_selectedDotBorderColor != dotColor)
+    {
+        _selectedDotBorderColor = dotColor;
+        [self setNeedsDisplay];
+    }
 }
 
 - (void)setDotSpacing:(CGFloat)dotSpacing

@@ -1,7 +1,5 @@
 FXPageControl
 
-version 1.4, November 17th, 2014
-
 Copyright (C) 2010 Charcoal Design
 
 This software is provided 'as-is', without any express or implied

@@ -7,9 +7,9 @@ FXPageControl is a drop-in replacement for Apple's UIPageControl that replicates
 Supported iOS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 8.1 (Xcode 6.1, Apple LLVM compiler 6.0)
-* Earliest supported deployment target - iOS 5.0
-* Earliest compatible deployment target - iOS 4.3
+* Supported build target - iOS 10.3 (Xcode 8.3, Apple LLVM compiler 8.1)
+* Earliest supported deployment target - iOS 8.0
+* Earliest compatible deployment target - iOS 6.0
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this iOS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
 
@@ -44,6 +44,8 @@ FXPageControl supports all of the methods of UIPageControl (with the exception o
     @property (nonatomic, strong) UIColor *dotShadowColor;
     @property (nonatomic, assign) CGFloat dotShadowBlur;
     @property (nonatomic, assign) CGSize dotShadowOffset;
+    @property (nonatomic, assign) CGFloat dotBorderWidth;
+    @property (nonatomic, strong) UIColor *dotBorderColor;
     
     @property (nonatomic, strong) UIImage *selectedDotImage;
     @property (nonatomic, assign) CGPathRef selectedDotShape;
@@ -52,20 +54,26 @@ FXPageControl supports all of the methods of UIPageControl (with the exception o
     @property (nonatomic, strong) UIColor *selectedDotShadowColor;
     @property (nonatomic, assign) CGFloat selectedDotShadowBlur;
     @property (nonatomic, assign) CGSize selectedDotShadowOffset;
+    @property (nonatomic, assign) CGFloat selectedDotBorderWidth;
+    @property (nonatomic, strong) UIColor *selectedDotBorderColor;
     
     @property (nonatomic, assign) CGFloat dotSpacing;
 
 The `dotColor`/`selectedDotColor` properties are nil by default and will be drawn as black unless otherwise specified. If you only specify the `selectedDotColor`, the `dotColor` will be automatically set to the same color, but with 25% opacity.
  
-The `dotShape`/`selectedDotShape` is `NULL` by default, and will be treated as `FXPageControlDotShapeCircle`. You can either use one of the supplied shape constants, or supply your own CGPath to be drawn for each dot. Note that the path will be retained.
+The `dotShape`/`selectedDotShape` properties are `NULL` by default, and will be treated as `FXPageControlDotShapeCircle`. You can either use one of the supplied shape constants, or supply your own CGPath to be drawn for each dot. Note that the path will be retained.
 
-The `selectedDotSize` is 0 by default and will default to the same size as the `dotSize` (for backwards compatibility).
+The `selectedDotSize` properties are 0 by default and will default to the same size as the `dotSize` (for backwards compatibility).
 
-The `dotShadowColor`/`selectedDotShadowColor` is `nil` by default, and will be treated as transparent.
+The `dotShadowColor`/`selectedDotShadowColor` properties are `nil` by default, and will be treated as transparent.
 
-The `dotImage`/`selectedDotImage` is `nil` by default and will override the shape and color options if set.
+The `dotBorderColor`/`selectedDotBorderColor` properties are `nil` by default, and will be treated as transparent.
 
-The `dotSpacing` specifies the spacing (in points) between the regular (unselected) dots. There is no equivalent "selectedDotSpacing" property.
+The `dotBorderWidth`/`selectedDotBorderWidth` properties are `0` by default.
+
+The `dotImage`/`selectedDotImage` properties are `nil` by default and will override the shape and color options if set.
+
+The `dotSpacing` property specifies the spacing (in points) between the regular (unselected) dots. There is no equivalent "selectedDotSpacing" property.
 
 Most of these properties can either be set programmatically, or in Interface Builder by using the User Defined Runtime Attributes feature. Alternatively, you could create a subclass of FXPageControl that overrides the default values for these fields, set in the `-setUp` method.
 
@@ -102,6 +110,14 @@ Note that CGPathRefs that are created and returned from the `-pageControl:shapeF
 
 Release Notes
 --------------
+
+Version 1.5
+
+- Now requires iOS 6 or above
+- Added support for VoiceOver
+- Added support for Xcode UITesting
+- Added `borderWidth`, `borderColor`, `selectedBorderWidth`, and `selectedBorderColor` properties
+- Improved compatibility with AutoLayout
 
 Version 1.4
 

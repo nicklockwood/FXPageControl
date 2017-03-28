@@ -249,6 +249,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_dotSize = dotSize;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -276,6 +277,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_dotShadowBlur = dotShadowBlur;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -285,6 +287,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_dotShadowOffset = dotShadowOffset;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -323,6 +326,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_selectedDotSize = dotSize;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -341,6 +345,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_selectedDotShadowBlur = dotShadowBlur;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -350,6 +355,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_selectedDotShadowOffset = dotShadowOffset;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -359,6 +365,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 	{
 		_dotSpacing = dotSpacing;
 		[self setNeedsDisplay];
+		[self invalidateIntrinsicContentSize];
 	}
 }
 
@@ -387,6 +394,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
             _currentPage = pages - 1;
         }
         [self setNeedsDisplay];
+        [self invalidateIntrinsicContentSize];
     }
 }
 

@@ -106,6 +106,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
     if (_numberOfPages > 1 || !_hidesForSinglePage)
     {
         CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextClearRect(context, rect);
         CGSize size = [self sizeForNumberOfPages:_numberOfPages];
         if (_vertical)
         {

@@ -214,7 +214,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 
             CGContextSaveGState(context);
             CGFloat offset = (_dotSize + _dotSpacing) * i + dotSize / 2;
-            if(i > _currentPage)
+            if (i > _currentPage)
             {
                 offset += _selectedDotSize - _dotSize;
             }

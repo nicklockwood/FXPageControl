@@ -1,0 +1,5 @@
+module FXPageControl {
+    header "FXPageControl.h"
+    link "UIKit"
+    export *
+}

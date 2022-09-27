@@ -14,6 +14,6 @@
   "platforms": {
     "ios": "6.0"
   },
-  "source_files": "FXPageControl/FXPageControl.{h,m}",
+  "source_files": "FXPageControl/**.{h,m}",
   "requires_arc": true
 }

@@ -1,6 +1,6 @@
 {
   "name": "FXPageControl",
-  "version": "1.5.5",
+  "version": "1.5",
   "license": "zlib",
   "summary": "Drop-in replacement for UIPageControl that adds the ability to edit the dot color, shape, shadow, size, image and spacing.",
   "homepage": "https://github.com/nicklockwood/FXPageControl",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/nicklockwood/FXPageControl.git",
-    "tag": "1.5.5"
+    "tag": "1.5"
   },
   "platforms": {
     "ios": "6.0"

@@ -8,5 +8,5 @@ let package = Package(
     platforms: [.iOS(.v9)],
     products: [.library(name: "FXPageControl", targets: ["FXPageControl"])],
     dependencies: [],
-    targets: [.target(name: "FXPageControl", dependencies: [], path: "FXPageControl", exclude: ["Examples"])]
+    targets: [.target(name: "FXPageControl", dependencies: [], path: "FXPageControl")]
 )

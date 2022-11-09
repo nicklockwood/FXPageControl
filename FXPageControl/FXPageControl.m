@@ -101,7 +101,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(__unused CGRect)rect
+- (void)drawRect:(CGRect)rect
 {
     if (_numberOfPages > 1 || !_hidesForSinglePage)
     {

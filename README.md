@@ -7,9 +7,9 @@ FXPageControl is a drop-in replacement for Apple's UIPageControl that replicates
 Supported iOS & SDK Versions
 -----------------------------
 
-* Supported build target - iOS 10.3 (Xcode 8.3, Apple LLVM compiler 8.1)
-* Earliest supported deployment target - iOS 8.0
-* Earliest compatible deployment target - iOS 6.0
+* Supported build target - iOS 11.0 (Xcode 14.0.1)
+* Earliest supported deployment target - iOS 11.0
+* Earliest compatible deployment target - iOS 9.0
 
 NOTE: 'Supported' means that the library has been tested with this version. 'Compatible' means that the library should work on this iOS version (i.e. it doesn't rely on any unavailable SDK features) but is no longer being tested for compatibility and may require tweaking or bug fixes to run correctly.
 
@@ -110,6 +110,12 @@ Note that CGPathRefs that are created and returned from the `-pageControl:shapeF
 
 Release Notes
 --------------
+
+Version 1.6
+
+- Now requires iOS 9 or above
+- Added nullability annotations
+- Added Swift Package Manager support
 
 Version 1.5
 

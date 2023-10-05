@@ -97,6 +97,7 @@ IB_DESIGNABLE @interface FXPageControl : UIControl
 - (nullable UIImage *)pageControl:(FXPageControl *)pageControl selectedImageForDotAtIndex:(NSInteger)index;
 - (CGPathRef)pageControl:(FXPageControl *)pageControl selectedShapeForDotAtIndex:(NSInteger)index;
 - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
+- (CGFloat)pageControl:(FXPageControl *)pageControl sizeForDotAtIndex:(NSInteger)index;
 
 @end
 

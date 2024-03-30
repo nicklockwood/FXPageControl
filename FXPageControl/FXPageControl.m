@@ -38,6 +38,7 @@
 #pragma clang diagnostic ignored "-Wfloat-conversion"
 #pragma clang diagnostic ignored "-Warc-repeated-use-of-weak"
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 
 
 #import <Availability.h>

@@ -156,12 +156,18 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
                 {
                     dotColor = _selectedDotColor ?: [UIColor blackColor];
                 }
+                if ([_delegate respondsToSelector:@selector(pageControl:sizeForDotAtIndex:)])
+                {
+                    dotSize = [_delegate pageControl:self sizeForDotAtIndex:i];
+                }
+                else {
+                    dotSize = _selectedDotSize ?: _dotSize;
+                }
                 dotShadowBlur = _selectedDotShadowBlur;
                 dotShadowColor = _selectedDotShadowColor;
                 dotShadowOffset = _selectedDotShadowOffset;
                 dotBorderWidth = _selectedDotBorderWidth;
                 dotBorderColor = _selectedDotBorderColor;
-                dotSize = _selectedDotSize ?: _dotSize;
             }
             else
             {
@@ -202,12 +208,18 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
                     }
                     dotColor = [dotColor colorWithAlphaComponent:0.25];
                 }
+                if ([_delegate respondsToSelector:@selector(pageControl:sizeForDotAtIndex:)])
+                {
+                    dotSize = [_delegate pageControl:self sizeForDotAtIndex:i];
+                }
+                else {
+                    dotSize = _dotSize;
+                }
                 dotShadowBlur = _dotShadowBlur;
                 dotShadowColor = _dotShadowColor;
                 dotShadowOffset = _dotShadowOffset;
                 dotBorderWidth = _dotBorderWidth;
                 dotBorderColor = _dotBorderColor;
-                dotSize = _dotSize;
             }
 
             [dotColor setFill];

@@ -98,6 +98,8 @@ IB_DESIGNABLE @interface FXPageControl : UIControl
 - (CGPathRef)pageControl:(FXPageControl *)pageControl selectedShapeForDotAtIndex:(NSInteger)index;
 - (UIColor *)pageControl:(FXPageControl *)pageControl selectedColorForDotAtIndex:(NSInteger)index;
 
+- (CGFloat)pageControl:(FXPageControl *)pageControl sizeForDotAtIndex:(NSInteger)index;
+
 @end
 
 

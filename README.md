@@ -110,6 +110,9 @@ Note that CGPathRefs that are created and returned from the `-pageControl:shapeF
 
 Release Notes
 --------------
+Version 1.7
+
+- Added optional `sizeForDotAtIndex` protocol method
 
 Version 1.6
 
